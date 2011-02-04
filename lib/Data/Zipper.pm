@@ -1,4 +1,4 @@
-package Zipper;
+package Data::Zipper;
 use strictures;
 use MooseX::Role::Parameterized;
 use namespace::autoclean;

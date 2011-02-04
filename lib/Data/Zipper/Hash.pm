@@ -1,4 +1,4 @@
-package Zipper::Hash;
+package Data::Zipper::Hash;
 use strictures;
 use Moose;
 use namespace::autoclean;
@@ -6,7 +6,7 @@ use namespace::autoclean;
 use MooseX::Types::Moose qw( Str HashRef );
 use MooseX::Types::Structured qw( Tuple );
 
-with 'Zipper' => { type => Tuple[ Str, HashRef ] };
+with 'Data::Zipper' => { type => Tuple[ Str, HashRef ] };
 
 sub traverse {
     my ($self, $path) = @_;

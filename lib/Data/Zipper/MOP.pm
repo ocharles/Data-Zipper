@@ -1,4 +1,4 @@
-package Zipper::MOP;
+package Data::Zipper::MOP;
 use strictures;
 use Moose;
 use namespace::autoclean;
@@ -6,7 +6,7 @@ use namespace::autoclean;
 use MooseX::Types::Moose qw( Object Str ArrayRef );
 use MooseX::Types::Structured qw( Tuple );
 
-with 'Zipper' => { type => Tuple[ Str, Object ] };
+with 'Data::Zipper' => { type => Tuple[ Str, Object ] };
 
 sub traverse {
     my ($self, $path) = @_;

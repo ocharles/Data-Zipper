@@ -1,7 +1,7 @@
 use strictures;
 use Test::More;
 
-use Zipper::Hash;
+use Data::Zipper::Hash;
 
 my $input = {
     what => {
@@ -10,7 +10,7 @@ my $input = {
     LEAVE => [qw( ME ALONE )],
 };
 
-my $output = Zipper::Hash->new( focus => $input )
+my $output = Data::Zipper::Hash->new( focus => $input )
     ->traverse('what')
       ->traverse('goes')
         ->set('out')

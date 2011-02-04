@@ -1,7 +1,7 @@
 use strictures;
 use Test::More;
 
-use Zipper::MOP;
+use Data::Zipper::MOP;
 
 {
     package Person;
@@ -18,7 +18,7 @@ use Zipper::MOP;
 }
 
 my $john = Person->new( name => 'John' );
-my $sally = Zipper::MOP->new( focus => $john )
+my $sally = Data::Zipper::MOP->new( focus => $john )
     ->traverse('name')
       ->set('Sally')
     ->up
@@ -28,7 +28,7 @@ isa_ok($sally => 'Person');
 is($sally->name => 'Sally');
 
 my $container = Container->new( person => Person->new( name => 'Ollie' ));
-my $new_container = Zipper::MOP->new( focus => $container )
+my $new_container = Data::Zipper::MOP->new( focus => $container )
     ->traverse('person')
       ->traverse('name')
         ->set('STEEEEVE')
