@@ -51,6 +51,12 @@ sub set {
     )
 }
 
+sub set_via {
+    my ($self, $code) = @_;
+    local $_ = $self->focus;
+    $self->set($code->($self->focus));
+}
+
 sub up {
     my $self = shift;
     my ($path, @rest) = $self->path;
@@ -106,6 +112,13 @@ the last traversal.
 =method set
 
 Replace the value of the current node with a new value.
+
+=method set_via
+
+Replace the value of the current node by executing a code reference.
+
+C<$_> will be bound to the current value of the node during execution, and
+the code reference will also be passed this via the first argument.
 
 =method zip
 
