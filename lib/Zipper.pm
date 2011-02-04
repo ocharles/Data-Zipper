@@ -1,12 +1,23 @@
 package Zipper;
 use strictures;
-use Moose::Role;
+use MooseX::Role::Parameterized;
 use namespace::autoclean;
+
+parameter 'type' => (
+    required => 1
+);
+
+role {
+
+use MooseX::Types::Moose qw( ArrayRef );
+
+my $params = shift;
 
 requires 'traverse', 'reconstruct';
 
 has path => (
     is => 'bare',
+    isa => ArrayRef[ $params->type ],
     default => sub { [] },
     traits => [ 'Array' ],
     handles => {
@@ -47,5 +58,7 @@ sub up {
         path => \@rest
     );
 }
+
+};
 
 1;

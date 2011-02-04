@@ -6,11 +6,7 @@ use namespace::autoclean;
 use MooseX::Types::Moose qw( Object Str ArrayRef );
 use MooseX::Types::Structured qw( Tuple );
 
-with 'Zipper';
-
-has '+path' => (
-    isa => ArrayRef[ Tuple[ Str, Object ]]
-);
+with 'Zipper' => { type => Tuple[ Str, Object ] };
 
 sub traverse {
     my ($self, $path) = @_;
