@@ -21,8 +21,7 @@ my $john = Person->new( name => 'John' );
 my $sally = Data::Zipper::MOP->new( focus => $john )
     ->traverse('name')
       ->set('Sally')
-    ->up
-    ->focus;
+    ->zip;
 
 isa_ok($sally => 'Person');
 is($sally->name => 'Sally');
@@ -33,8 +32,7 @@ my $new_container = Data::Zipper::MOP->new( focus => $container )
       ->traverse('name')
         ->set('STEEEEVE')
       ->up
-    ->up
-    ->focus;
+    ->zip;
 
 isa_ok($new_container, 'Container');
 isa_ok($new_container->person, 'Person');

@@ -14,9 +14,7 @@ my $output = Data::Zipper::Hash->new( focus => $input )
     ->traverse('what')
       ->traverse('goes')
         ->set('out')
-      ->up
-    ->up
-    ->focus;
+   ->zip;
 
 is_deeply($output, {
     what => {

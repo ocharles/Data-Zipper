@@ -61,6 +61,15 @@ sub up {
     );
 }
 
+sub zip {
+    my $zipper = shift;
+
+    while ($zipper->path) {
+        $zipper = $zipper->up;
+    }
+    return $zipper->focus;
+}
+
 };
 
 1;
@@ -98,5 +107,10 @@ the last traversal.
 =method set
 
 Replace the value of the current node with a new value.
+
+=method zip
+
+Repeatedly moves back up the paths traversed, which has the effect of
+returning back to the same structure as the original input.
 
 =cut
