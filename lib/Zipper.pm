@@ -44,7 +44,7 @@ sub up {
     my ($path, @rest) = $self->path;
     return $self->meta->new_object(
         focus => $self->reconstruct($self->focus, $path),
-        _path => \@rest
+        path => \@rest
     );
 }
 
