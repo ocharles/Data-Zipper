@@ -1,5 +1,7 @@
 package Data::Zipper::Hash;
-use strictures;
+# ABSTRACT: A zipper for hash references
+
+use warnings FATAL => 'all';
 use Moose;
 use namespace::autoclean;
 
@@ -27,3 +29,14 @@ sub reconstruct {
 
 __PACKAGE__->meta->make_immutable;
 1;
+
+=method traverse
+
+Traverse into the currently focused hash reference by moving into
+the value of L<$key>.
+
+=method reconstruct
+
+(internal)
+
+=cut

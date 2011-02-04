@@ -1,5 +1,7 @@
 package Data::Zipper;
-use strictures;
+# ABSTRACT: Easily traverse and transform immutable data
+
+use warnings FATAL => 'all';
 use MooseX::Role::Parameterized;
 use namespace::autoclean;
 
@@ -62,3 +64,39 @@ sub up {
 };
 
 1;
+
+=head1 SYNOPSIS
+
+    package Person;
+    use Moose;
+
+    has name => ( is => 'ro' );
+
+    package MyApp;
+    use Data::Zipper::MOP;
+
+    my $person = Person->new( name => 'John' )
+    my $sally = Data::Zipper::MOP->new( focus => $person)
+        ->traverse('name')->set('Sally')
+        ->up
+        ->focus;
+
+=attr focus
+
+Get the value of the current point in the data structure being focused on (as
+navigated to by L<traverse>)
+
+=method traverse
+
+Traverse deeper into the data structure under focus.
+
+=method up
+
+Move "up" a level from the current traversal. Has the effect of unwinding
+the last traversal.
+
+=method set
+
+Replace the value of the current node with a new value.
+
+=cut

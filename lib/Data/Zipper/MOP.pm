@@ -1,5 +1,7 @@
 package Data::Zipper::MOP;
-use strictures;
+# ABSTRACT: A zipper for MOP based objects
+
+use warnings FATAL => 'all';
 use Moose;
 use namespace::autoclean;
 
@@ -27,3 +29,14 @@ sub reconstruct {
 
 __PACKAGE__->meta->make_immutable;
 1;
+
+=method traverse
+
+Traverse into the object under focus, by moving into the value of an attribute
+with a given name. Currently assumes the reader is the same as the name.
+
+=method reconstruct
+
+(internal)
+
+=cut
