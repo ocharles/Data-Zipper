@@ -2,75 +2,34 @@ package Data::Zipper;
 # ABSTRACT: Easily traverse and transform immutable data
 
 use warnings FATAL => 'all';
-use MooseX::Role::Parameterized;
-use namespace::autoclean;
 
-parameter 'type' => (
-    required => 1
-);
-
-role {
-
-use MooseX::Types::Moose qw( ArrayRef );
-
-my $params = shift;
-
-requires 'traverse', 'reconstruct';
-
-has path => (
-    is => 'bare',
-    isa => ArrayRef[ $params->type ],
-    default => sub { [] },
-    traits => [ 'Array' ],
-    handles => {
-        path => 'elements'
-    }
-);
-
-has focus => (
-    is => 'ro',
-    required => 1
-);
-
-around traverse => sub {
-    my ($traverser, $self, @args) = @_;
-    my ($focus, $path) = $self->$traverser(@args);
-    return $self->meta->new_object(
-        focus => $focus,
-        path => [
-            $path,
-            $self->path
-        ]
-    );
+use Carp 'confess';
+use Class::MOP;
+use Scalar::Util 'blessed';
+use Sub::Exporter -setup => {
+    exports => [qw( zipper )]
 };
 
-sub set {
-    my ($self, $new_value) = @_;
-    return $self->meta->clone_object(
-        $self,
-        focus => $new_value
-    )
-}
+sub zipper {
+    my %args = @_ == 1
+        ? ( focus => shift() )
+            : @_;
 
-sub up {
-    my $self = shift;
-    my ($path, @rest) = $self->path;
-    return $self->meta->new_object(
-        focus => $self->reconstruct($self->focus, $path),
-        path => \@rest
-    );
-}
-
-sub zip {
-    my $zipper = shift;
-
-    while ($zipper->path) {
-        $zipper = $zipper->up;
+    my $data = $args{focus};
+    my $class;
+    if(blessed($data)) {
+        $class = 'Data::Zipper::MOP';
     }
-    return $zipper->focus;
-}
+    elsif(ref($data) eq 'HASH') {
+        $class = 'Data::Zipper::Hash'
+    }
+    else {
+        die 'Cannot zip ' . ref($data) . ' objects';
+    }
 
-};
+    Class::MOP::load_class($class);
+    return $class->new(%args);
+}
 
 1;
 
@@ -82,10 +41,10 @@ sub zip {
     has name => ( is => 'ro' );
 
     package MyApp;
-    use Data::Zipper::MOP;
+    use Data::Zipper 'zipper';
 
     my $person = Person->new( name => 'John' )
-    my $sally = Data::Zipper::MOP->new( focus => $person)
+    my $sally = zipper($person)
         ->traverse('name')->set('Sally')
         ->up
         ->focus;

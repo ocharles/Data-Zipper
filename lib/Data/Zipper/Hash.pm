@@ -8,7 +8,7 @@ use namespace::autoclean;
 use MooseX::Types::Moose qw( Str HashRef );
 use MooseX::Types::Structured qw( Tuple );
 
-with 'Data::Zipper' => { type => Tuple[ Str, HashRef ] };
+with 'Data::Zipper::API' => { type => Tuple[ Str, HashRef ] };
 
 sub traverse {
     my ($self, $path) = @_;
