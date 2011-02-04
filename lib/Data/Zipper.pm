@@ -49,27 +49,8 @@ sub zipper {
         ->up
         ->focus;
 
-=attr focus
+=func zipper
 
-Get the value of the current point in the data structure being focused on (as
-navigated to by L<traverse>)
-
-=method traverse
-
-Traverse deeper into the data structure under focus.
-
-=method up
-
-Move "up" a level from the current traversal. Has the effect of unwinding
-the last traversal.
-
-=method set
-
-Replace the value of the current node with a new value.
-
-=method zip
-
-Repeatedly moves back up the paths traversed, which has the effect of
-returning back to the same structure as the original input.
+Create a zipper of the correct type, depending on the data given
 
 =cut
