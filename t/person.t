@@ -1,4 +1,5 @@
-use strictures;
+use warnings FATAL => 'all';
+use strict;
 use Test::More;
 
 use Data::Zipper::MOP;
